@@ -1,0 +1,15 @@
+# VPS deploy behind the existing traefik-idis proxy.
+# On the server, create a .env next to this file with: LANEWAY_DOMAIN=your.domain
+services:
+  app:
+    build: .
+    container_name: laneway-edu
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3013:3000"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.laneway-edu.rule=Host(`${LANEWAY_DOMAIN:?set LANEWAY_DOMAIN in .env}`)
+      - traefik.http.routers.laneway-edu.entrypoints=websecure
+      - traefik.http.routers.laneway-edu.tls.certresolver=letsencrypt
+      - traefik.http.services.laneway-edu.loadbalancer.server.port=3000
