@@ -1,5 +1,7 @@
 # VPS deploy behind the existing traefik-idis proxy.
 # On the server, create a .env next to this file with: LANEWAY_DOMAIN=your.domain
+# Fixed project name so it never depends on (or clashes via) the clone folder's name.
+name: laneway-edu
 services:
   app:
     build: .
