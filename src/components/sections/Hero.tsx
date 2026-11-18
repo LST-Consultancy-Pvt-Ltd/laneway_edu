@@ -64,7 +64,8 @@ export function Hero() {
       </motion.div>
 
       <Container className="relative">
-        <div className="max-w-2xl xl:max-w-xl">
+        {/* Tablets & small laptops (stacked layout): centred. Desktop (xl): left, beside the background image. */}
+        <div className="max-w-2xl md:mx-auto md:text-center xl:mx-0 xl:max-w-xl xl:text-left">
           <motion.p
             {...fadeUp(0)}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-paper/80 py-1.5 pl-2 pr-4 text-sm font-medium text-ink/80 backdrop-blur"
@@ -88,7 +89,7 @@ export function Hero() {
             />
           </h1>
 
-          <motion.ul {...fadeUp(0.55)} className="mt-7 flex flex-wrap gap-x-1 gap-y-2 text-[0.9375rem] font-medium text-ink/80 sm:text-base">
+          <motion.ul {...fadeUp(0.55)} className="mt-7 flex flex-wrap gap-x-1 gap-y-2 text-[0.9375rem] font-medium text-ink/80 sm:text-base md:justify-center xl:justify-start">
             {hero.disciplines.map((d, i) => (
               <li key={d} className="flex items-center">
                 {d}
@@ -99,7 +100,7 @@ export function Hero() {
             ))}
           </motion.ul>
 
-          <motion.div {...fadeUp(0.7)} className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <motion.div {...fadeUp(0.7)} className="mt-9 flex flex-col gap-3 sm:flex-row md:justify-center xl:justify-start">
             <Button href="#courses" size="lg" icon={<ArrowDown />}>
               Explore courses
             </Button>
@@ -108,7 +109,7 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          <motion.dl {...fadeUp(0.85)} className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-border pt-6">
+          <motion.dl {...fadeUp(0.85)} className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-border pt-6 md:mx-auto xl:mx-0">
             <div>
               <dt className="text-xs font-medium uppercase tracking-wider text-muted">Courses</dt>
               <dd className="mt-1 font-heading text-2xl font-semibold text-ink">{totalCourses}</dd>
@@ -150,7 +151,7 @@ export function Hero() {
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={ready ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.8, delay: 1.2, ease }}
-          className="relative z-10 -mt-14 mb-10 ml-auto w-full max-w-xs rounded-2xl border border-border bg-paper/95 p-4 shadow-lift backdrop-blur sm:mr-2 xl:absolute xl:bottom-0 xl:right-8 xl:m-0 xl:-mb-6"
+          className="relative z-10 -mt-14 mb-10 ml-auto w-full max-w-xs md:mx-auto md:text-left rounded-2xl border border-border bg-paper/95 p-4 shadow-lift backdrop-blur sm:mr-2 xl:absolute xl:bottom-0 xl:right-8 xl:m-0 xl:-mb-6"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Nationally recognised</p>
           <p className="mt-1.5 text-sm leading-relaxed text-ink/80">
