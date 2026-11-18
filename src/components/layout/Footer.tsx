@@ -6,6 +6,7 @@ import Link from "next/link";
 import { courseCategories, LEADERSHIP_SLUG } from "@/data/courses";
 import { newsletter } from "@/data/home";
 import { site } from "@/data/site";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { NewsletterForm } from "./NewsletterForm";
 
 const linkClass = "text-[0.9375rem] text-white/70 transition-colors hover:text-white";
@@ -17,7 +18,9 @@ export function Footer() {
       <div className="border-b border-white/10">
         <Container className="grid gap-8 py-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16 lg:py-16">
           <div>
-            <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">{newsletter.title}</h2>
+            <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
+              <WordReveal text={newsletter.title} />
+            </h2>
             <p className="mt-3 max-w-xl leading-relaxed text-white/70">{site.mission}</p>
           </div>
           <div>

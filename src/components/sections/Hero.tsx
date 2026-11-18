@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight, MapPin } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
+import { useLoaderDone } from "@/components/layout/useLoaderDone";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -16,13 +17,15 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  // Hold the entrance until the page loader starts lifting
+  const ready = useLoaderDone();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.12]);
 
   const fadeUp = (delay: number) => ({
     initial: reduce ? { opacity: 0 } : { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
+    animate: ready ? { opacity: 1, y: 0 } : undefined,
     transition: { duration: 0.8, delay, ease },
   });
 
@@ -57,6 +60,7 @@ export function Hero() {
             <TextReveal
               lines={hero.title}
               delay={0.15}
+              play={ready}
               accentLine={2}
               accentClassName="italic text-brand [font-variation-settings:'SOFT'_100]"
             />
@@ -100,7 +104,7 @@ export function Hero() {
 
         <motion.div
           initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 24 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+          animate={ready ? { opacity: 1, scale: 1, y: 0 } : undefined}
           transition={{ duration: 1.1, delay: 0.2, ease }}
           className="relative"
         >
@@ -113,7 +117,7 @@ export function Hero() {
                 priority
                 placeholder="blur"
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover object-[50%_40%]"
+                className="object-cover object-[23%_50%]"
               />
             </motion.div>
           </div>
@@ -121,7 +125,7 @@ export function Hero() {
           {/* Floating credential card */}
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={ready ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, delay: 1, ease }}
             className="absolute -bottom-6 left-4 right-4 rounded-2xl border border-border bg-paper/95 p-4 shadow-lift backdrop-blur sm:left-auto sm:right-6 sm:w-72 lg:-left-10 lg:right-auto"
           >

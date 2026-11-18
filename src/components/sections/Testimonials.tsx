@@ -26,11 +26,7 @@ export function Testimonials() {
           <SectionHeading
             id="testimonials-title"
             eyebrow="Student stories"
-            title={
-              <>
-                Don’t just take <span className="italic text-brand">our word</span> for it.
-              </>
-            }
+            title="Don’t just take *our word* for it."
           />
           <button
             type="button"

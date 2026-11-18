@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { ScrollHighlight } from "@/components/motion/ScrollHighlight";
 import { Container } from "@/components/ui/Container";
 import { intro } from "@/data/home";
 
@@ -13,7 +14,7 @@ export function Intro() {
             id="intro-title"
             className="text-3xl font-semibold leading-[1.12] text-ink sm:text-4xl lg:text-[3.25rem]"
           >
-            {intro.title}
+            <ScrollHighlight text={intro.title} dimOpacity={0.22} />
           </h2>
         </FadeIn>
         <FadeIn delay={0.15} className="space-y-5 text-lg leading-relaxed text-muted lg:col-span-5 lg:pt-10">

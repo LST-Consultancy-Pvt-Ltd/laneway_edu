@@ -1,6 +1,7 @@
 import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { images } from "@/data/images";
@@ -39,7 +40,7 @@ export function GetStarted({
             />
             <div className="max-w-2xl">
               <h2 id={`${id}-title`} className="text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
-                {getStarted.title}
+                <WordReveal text={getStarted.title} />
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-white/80">{getStarted.body}</p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">

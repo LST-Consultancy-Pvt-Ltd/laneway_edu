@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { cn } from "@/lib/utils";
 
 type SectionHeadingProps = {
   eyebrow?: string;
+  /** Strings animate word by word; wrap words in *asterisks* for accent styling */
   title: ReactNode;
   description?: ReactNode;
   align?: "left" | "center";
@@ -52,7 +54,11 @@ export function SectionHeading({
           inverse ? "text-white" : "text-ink",
         )}
       >
-        {title}
+        {typeof title === "string" ? (
+          <WordReveal text={title} accentClassName={inverse ? "italic text-brand-light" : "italic text-brand"} />
+        ) : (
+          title
+        )}
       </Heading>
       {description ? (
         <p

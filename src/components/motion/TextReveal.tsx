@@ -9,6 +9,8 @@ type TextRevealProps = {
   className?: string;
   lineClassName?: string;
   delay?: number;
+  /** Hold the animation until true (e.g. until the page loader lifts) */
+  play?: boolean;
   /** Line index (0-based) to style as accent */
   accentLine?: number;
   accentClassName?: string;
@@ -23,6 +25,7 @@ export function TextReveal({
   className,
   lineClassName,
   delay = 0.1,
+  play = true,
   accentLine,
   accentClassName,
 }: TextRevealProps) {
@@ -36,7 +39,7 @@ export function TextReveal({
             <motion.span
               className={cn("block", i === accentLine && accentClassName)}
               initial={reduce ? { opacity: 0 } : { y: "105%" }}
-              animate={reduce ? { opacity: 1 } : { y: "0%" }}
+              animate={play ? (reduce ? { opacity: 1 } : { y: "0%" }) : undefined}
               transition={{
                 duration: reduce ? 0.2 : 0.9,
                 delay: delay + i * 0.12,

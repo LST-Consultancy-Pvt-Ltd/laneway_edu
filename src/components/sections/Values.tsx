@@ -2,6 +2,7 @@ import { HeartHandshake } from "lucide-react";
 import Image from "next/image";
 import { Counter } from "@/components/motion/Counter";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { Parallax } from "@/components/motion/Parallax";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { Container } from "@/components/ui/Container";
@@ -58,7 +59,9 @@ export function Values() {
                 <HeartHandshake aria-hidden="true" className="size-4" />
                 {socialPurpose.eyebrow}
               </p>
-              <h3 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">{socialPurpose.title}</h3>
+              <h3 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">
+                <WordReveal text={socialPurpose.title} />
+              </h3>
               <p className="mt-4 text-lg leading-relaxed text-ink/80">{socialPurpose.body}</p>
               <p className="mt-3 leading-relaxed text-ink/70">{socialPurpose.detail}</p>
             </div>

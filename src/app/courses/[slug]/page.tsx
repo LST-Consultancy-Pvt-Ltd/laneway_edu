@@ -20,6 +20,7 @@ import { Suspense } from "react";
 import { EnquiryForm } from "@/components/course/EnquiryForm";
 import { MobileEnquiry } from "@/components/course/MobileEnquiry";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { WordReveal } from "@/components/motion/WordReveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { GetStarted } from "@/components/sections/GetStarted";
 import { Badge } from "@/components/ui/Badge";
@@ -163,7 +164,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
               <Badge variant="inverse">Nationally recognised</Badge>
             </div>
             <h1 id="course-title" className="mt-5 text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-[4rem]">
-              {course.title}
+              <WordReveal text={course.title} delay={0.1} stagger={0.06} amount={0.1} />
             </h1>
             <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-lg text-white/80">
               <span>{course.facts.duration}</span>
@@ -235,7 +236,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
             </FadeIn>
             <FadeIn delay={0.1} className="mt-12">
               <h2 id="overview-title" className="text-3xl font-semibold text-ink sm:text-4xl">
-                Course overview
+                <WordReveal text="Course overview" />
               </h2>
               <div className="mt-5 space-y-5 text-lg leading-relaxed text-muted">
                 {course.overview.map((p) => (
@@ -249,7 +250,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
           <section id="entry" aria-labelledby="entry-title" className="mt-20 scroll-mt-28">
             <FadeIn>
               <h2 id="entry-title" className="text-3xl font-semibold text-ink sm:text-4xl">
-                Entry requirements
+                <WordReveal text="Entry requirements" />
               </h2>
             </FadeIn>
             <Stagger className="mt-8 grid gap-5 md:grid-cols-2">
@@ -294,7 +295,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
           <section id="careers" aria-labelledby="careers-title" className="mt-20 scroll-mt-28">
             <FadeIn>
               <h2 id="careers-title" className="text-3xl font-semibold text-ink sm:text-4xl">
-                Employment opportunities
+                <WordReveal text="Employment opportunities" />
               </h2>
               <p className="mt-3 text-lg text-muted">Where this diploma can take you.</p>
             </FadeIn>
@@ -320,7 +321,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
               <div className="grid gap-6 rounded-[1.75rem] bg-brand-soft p-7 sm:p-10 md:grid-cols-[1fr_auto] md:items-center">
                 <div>
                   <h2 id="intakes-title" className="text-2xl font-semibold text-ink sm:text-3xl">
-                    Intake dates &amp; fee information
+                    <WordReveal text="Intake dates & fee information" />
                   </h2>
                   <p className="mt-3 max-w-xl leading-relaxed text-ink/75">
                     Send us an enquiry and our admissions team will share upcoming start dates and fees for
@@ -344,7 +345,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
           <section id="student-story" aria-labelledby="story-title" className="mt-20 scroll-mt-28">
             <FadeIn>
               <h2 id="story-title" className="text-3xl font-semibold text-ink sm:text-4xl">
-                Don’t just take our word for it
+                <WordReveal text="Don’t just take *our word* for it" />
               </h2>
             </FadeIn>
             <FadeIn delay={0.1} className="mt-8">
@@ -407,7 +408,7 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
                   Keep growing as a {category?.name.toLowerCase()}
                 </p>
                 <h2 id="related-title" className="text-3xl font-semibold text-ink sm:text-4xl">
-                  Related courses
+                  <WordReveal text="Related courses" />
                 </h2>
               </div>
               <Link

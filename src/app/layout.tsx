@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { loaderScript, loaderStyles, PageLoader } from "@/components/layout/PageLoader";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { site } from "@/data/site";
@@ -46,8 +47,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-AU" className={cn(inter.variable, fraunces.variable, "antialiased")}>
+    // data-loader is set by the inline loader script before hydration
+    <html lang="en-AU" className={cn(inter.variable, fraunces.variable, "antialiased")} suppressHydrationWarning>
+      <head>
+        {/* Loader is self-contained: its CSS + script are inlined, independent of the main stylesheet */}
+        <style dangerouslySetInnerHTML={{ __html: loaderStyles }} />
+        <script dangerouslySetInnerHTML={{ __html: loaderScript }} />
+      </head>
       <body className="flex min-h-dvh flex-col">
+        <PageLoader />
         <MotionProvider>
           <SmoothScroll>
             <Header />
