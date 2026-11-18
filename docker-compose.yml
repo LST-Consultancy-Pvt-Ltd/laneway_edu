@@ -1,5 +1,4 @@
-# VPS deploy behind the existing traefik-idis proxy.
-# On the server, create a .env next to this file with: LANEWAY_DOMAIN=your.domain
+# Staging on the VPS, served directly on http://<server-ip>:3013 (no domain, no proxy).
 # Fixed project name so it never depends on (or clashes via) the clone folder's name.
 name: laneway-edu
 services:
@@ -8,10 +7,4 @@ services:
     container_name: laneway-edu
     restart: unless-stopped
     ports:
-      - "127.0.0.1:3013:3000"
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.laneway-edu.rule=Host(`${LANEWAY_DOMAIN:?set LANEWAY_DOMAIN in .env}`)
-      - traefik.http.routers.laneway-edu.entrypoints=websecure
-      - traefik.http.routers.laneway-edu.tls.certresolver=letsencrypt
-      - traefik.http.services.laneway-edu.loadbalancer.server.port=3000
+      - "3013:3000"
