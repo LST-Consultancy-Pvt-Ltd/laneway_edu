@@ -1,7 +1,7 @@
 "use client";
 
 import { useLenis } from "lenis/react";
-import { ArrowRight, ChevronDown, Mail, Phone, X } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronRight, Mail, Phone, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
@@ -12,6 +12,11 @@ import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 type MobileMenuProps = { open: boolean; onClose: () => void };
+
+// Each sub-link is its own bordered row so wrapped titles can't run into the next link.
+const subListClass = "divide-y divide-border overflow-hidden rounded-xl border border-border";
+const subLinkClass =
+  "flex min-h-14 items-center gap-3 px-4 py-3 transition-colors hover:bg-surface active:bg-surface";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -122,31 +127,32 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                     <div className="space-y-5 pb-5">
                       {courseCategories.map((category) => (
                         <div key={category.id}>
-                          <p className="mb-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand">
                             {category.name}
                           </p>
-                          <ul>
+                          <ul className={subListClass}>
                             {category.courses.map((course) => (
                               <li key={course.code + course.title}>
-                                {course.featured ? (
-                                  <SmartLink
-                                    href={course.href}
-                                    onClick={onClose}
-                                    className="-mx-2 my-0.5 block rounded-lg bg-brand-soft px-2 py-2 text-[0.9375rem] font-semibold leading-snug text-brand-dark"
-                                  >
-                                    <span className="mr-1.5 font-mono text-xs font-medium opacity-80">{course.code}</span>
-                                    {course.title}
-                                  </SmartLink>
-                                ) : (
-                                  <SmartLink
-                                    href={course.href}
-                                    onClick={onClose}
-                                    className="block rounded-lg py-2 pr-2 text-[0.9375rem] leading-snug text-ink/80 hover:text-brand"
-                                  >
-                                    <span className="mr-1.5 font-mono text-xs text-muted">{course.code}</span>
-                                    {course.title}
-                                  </SmartLink>
-                                )}
+                                <SmartLink
+                                  href={course.href}
+                                  onClick={onClose}
+                                  className={cn(subLinkClass, course.featured && "bg-brand-soft hover:bg-brand-soft")}
+                                >
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block font-mono text-[0.6875rem] tracking-wide text-muted">
+                                      {course.code}
+                                    </span>
+                                    <span
+                                      className={cn(
+                                        "mt-0.5 block text-[0.9375rem] leading-snug text-ink",
+                                        course.featured && "font-semibold text-brand-dark",
+                                      )}
+                                    >
+                                      {course.title}
+                                    </span>
+                                  </span>
+                                  <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-muted" />
+                                </SmartLink>
                               </li>
                             ))}
                           </ul>
@@ -163,20 +169,21 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                     onToggle={toggleSection}
                   />
                   <Collapse open={expanded === "campuses"} id="mobile-campuses">
-                    <ul className="pb-4">
-                      {site.campusLinks.map((link) => (
-                        <li key={link.href}>
-                          <SmartLink
-                            href={link.href}
-                            onClick={onClose}
-                            className="block rounded-lg py-2 text-ink/80 hover:text-brand"
-                          >
-                            <span className="font-medium text-ink">{link.label}</span>
-                            <span className="block text-sm text-muted">{link.description}</span>
-                          </SmartLink>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="pb-5">
+                      <ul className={subListClass}>
+                        {site.campusLinks.map((link) => (
+                          <li key={link.href}>
+                            <SmartLink href={link.href} onClick={onClose} className={subLinkClass}>
+                              <span className="min-w-0 flex-1">
+                                <span className="block font-medium leading-snug text-ink">{link.label}</span>
+                                <span className="mt-0.5 block text-sm text-muted">{link.description}</span>
+                              </span>
+                              <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-muted" />
+                            </SmartLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </Collapse>
                 </li>
                 {site.primaryNav.map((link) => (
