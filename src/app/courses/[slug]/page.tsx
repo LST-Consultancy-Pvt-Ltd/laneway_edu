@@ -16,6 +16,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { EnquiryForm } from "@/components/course/EnquiryForm";
 import { MobileEnquiry } from "@/components/course/MobileEnquiry";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -26,6 +27,13 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { courseDetails, getCategory, getCourseDetail } from "@/data/courses";
 import { site } from "@/data/site";
+
+/**
+ * Course pages are built entirely from static data, so require the complete
+ * route (including `params`) to be prerendered. This makes navigation instant
+ * and fails the build if request-time work is ever added to this route.
+ */
+export const ensureStatic = "navigation";
 
 export function generateStaticParams() {
   return courseDetails.map((course) => ({ slug: course.slug }));
@@ -41,7 +49,39 @@ export async function generateMetadata({ params }: PageProps<"/courses/[slug]">)
   };
 }
 
-export default async function CoursePage({ params }: PageProps<"/courses/[slug]">) {
+/**
+ * The shell (header, footer, skeleton) renders instantly; everything that
+ * reads the URL `params` sits inside <Suspense>. Known slugs are still fully
+ * prerendered, so visitors get complete static HTML.
+ */
+export default function CoursePage({ params }: PageProps<"/courses/[slug]">) {
+  return (
+    <Suspense fallback={<CourseSkeleton />}>
+      <CourseContent params={params} />
+    </Suspense>
+  );
+}
+
+function CourseSkeleton() {
+  return (
+    <div aria-busy="true" aria-label="Loading course">
+      <div className="bg-ink pb-28 pt-8 sm:pb-32 lg:pb-40 lg:pt-12">
+        <Container>
+          <div className="h-4 w-72 max-w-full animate-pulse rounded bg-white/10" />
+          <div className="mt-16 h-6 w-40 animate-pulse rounded-full bg-white/10" />
+          <div className="mt-5 h-14 w-full max-w-2xl animate-pulse rounded-xl bg-white/10" />
+          <div className="mt-3 h-14 w-3/4 max-w-xl animate-pulse rounded-xl bg-white/10" />
+        </Container>
+      </div>
+      <Container className="relative -mt-16 lg:-mt-20">
+        <div className="h-28 animate-pulse rounded-card border border-border bg-paper shadow-lift" />
+      </Container>
+      <div className="h-[60vh]" />
+    </div>
+  );
+}
+
+async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">["params"] }) {
   const { slug } = await params;
   const course = getCourseDetail(slug);
   if (!course) notFound();
