@@ -1,0 +1,10 @@
+# Staging on the VPS, served directly on http://<server-ip>:3013 (no domain, no proxy).
+# Fixed project name so it never depends on (or clashes via) the clone folder's name.
+name: laneway-edu
+services:
+  app:
+    build: .
+    container_name: laneway-edu
+    restart: unless-stopped
+    ports:
+      - "3013:3000"
