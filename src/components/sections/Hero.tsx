@@ -20,8 +20,7 @@ export function Hero() {
   // Hold the entrance until the page loader starts lifting
   const ready = useLoaderDone();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.12]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
 
   const fadeUp = (delay: number) => ({
     initial: reduce ? { opacity: 0 } : { opacity: 0, y: 20 },
@@ -33,7 +32,7 @@ export function Hero() {
     <section
       ref={ref}
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-paper pb-16 pt-8 sm:pb-20 lg:pb-28 lg:pt-14"
+      className="relative isolate overflow-hidden bg-paper pt-8 lg:pt-14 xl:flex xl:min-h-[46rem] xl:items-center xl:py-20"
     >
       {/* Decorative shapes echoing the methodology diagram */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-0">
@@ -41,8 +40,31 @@ export function Hero() {
         <div className="absolute -right-20 -top-32 size-[30rem] rounded-full bg-brand-soft blur-3xl" />
       </div>
 
-      <Container className="relative grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-        <div className="max-w-2xl">
+      {/* Desktop: full-height background image on the right, fading into the page on
+          its left and bottom edges so the text keeps a clean background. Fades in simply. */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={ready ? { opacity: 1 } : undefined}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden w-[55%] xl:block"
+      >
+        <div className="absolute inset-0 [-webkit-mask-composite:source-in] [mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,black_18%),linear-gradient(to_top,transparent,black_20%)]">
+          <motion.div style={reduce ? undefined : { y: imageY }} className="absolute inset-0">
+            <Image
+              src={hero.image}
+              alt={hero.imageAlt}
+              fill
+              priority
+              placeholder="blur"
+              sizes="(min-width: 1280px) 55vw, 1px"
+              className="object-cover object-[15%_50%]"
+            />
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <Container className="relative">
+        <div className="max-w-2xl xl:max-w-xl">
           <motion.p
             {...fadeUp(0)}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-paper/80 py-1.5 pl-2 pr-4 text-sm font-medium text-ink/80 backdrop-blur"
@@ -102,38 +124,38 @@ export function Hero() {
           </motion.dl>
         </div>
 
+        {/* Phones & tablets: full-bleed image under the text (edge fades in from the top) */}
         <motion.div
-          initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 24 }}
-          animate={ready ? { opacity: 1, scale: 1, y: 0 } : undefined}
-          transition={{ duration: 1.1, delay: 0.2, ease }}
-          className="relative"
+          initial={{ opacity: 0 }}
+          animate={ready ? { opacity: 1 } : undefined}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="relative -mx-4 mt-10 aspect-[4/3] sm:-mx-6 sm:aspect-[16/9] lg:-mx-8 xl:hidden"
         >
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-brand-soft shadow-lift sm:aspect-[5/4] lg:aspect-[4/5]">
-            <motion.div style={reduce ? undefined : { y: imageY, scale: imageScale }} className="absolute inset-0">
+          <div className="absolute inset-0 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_28%)]">
+            <div className="absolute inset-0">
               <Image
                 src={hero.image}
-                alt={hero.imageAlt}
+                alt=""
                 fill
-                priority
                 placeholder="blur"
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover object-[23%_50%]"
+                sizes="(min-width: 1280px) 1px, 100vw"
+                className="object-cover object-[35%_45%]"
               />
-            </motion.div>
+            </div>
           </div>
+        </motion.div>
 
-          {/* Floating credential card */}
-          <motion.div
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
-            animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.8, delay: 1, ease }}
-            className="absolute -bottom-6 left-4 right-4 rounded-2xl border border-border bg-paper/95 p-4 shadow-lift backdrop-blur sm:left-auto sm:right-6 sm:w-72 lg:-left-10 lg:right-auto"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Nationally recognised</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-ink/80">
-              Registered Training Organisation {site.compliance.rto} · CRICOS Provider {site.compliance.cricos}
-            </p>
-          </motion.div>
+        {/* Floating credential card */}
+        <motion.div
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          animate={ready ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.8, delay: 1.2, ease }}
+          className="relative z-10 -mt-14 mb-10 ml-auto w-full max-w-xs rounded-2xl border border-border bg-paper/95 p-4 shadow-lift backdrop-blur sm:mr-2 xl:absolute xl:bottom-0 xl:right-8 xl:m-0 xl:-mb-6"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Nationally recognised</p>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink/80">
+            Registered Training Organisation {site.compliance.rto} · CRICOS Provider {site.compliance.cricos}
+          </p>
         </motion.div>
       </Container>
     </section>

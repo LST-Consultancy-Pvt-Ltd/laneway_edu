@@ -9,8 +9,8 @@ export const hero = {
   eyebrow: "Sydney & Melbourne",
   title: ["Educational", "Experiences for", "Curious Minds"],
   disciplines: ["Entrepreneurship", "Marketing", "Leadership", "Project Management", "Coding", "Cyber Security"],
-  image: images.heroMural,
-  imageAlt: "A student floats in front of painted wings on a teal laneway wall",
+  image: images.heroStudents,
+  imageAlt: "Students laughing together over their laptops at a table in front of library bookshelves",
 };
 
 export const intro = {

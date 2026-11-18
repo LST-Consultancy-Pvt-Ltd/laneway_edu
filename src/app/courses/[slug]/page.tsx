@@ -421,16 +421,23 @@ async function CourseContent({ params }: { params: PageProps<"/courses/[slug]">[
             </FadeIn>
             <Stagger className="mt-10 grid gap-5 md:grid-cols-3">
               {related.map((r) => (
-                <StaggerItem
-                  key={r.code + r.title}
-                  as="article"
-                  className="flex h-full flex-col rounded-card border border-border bg-paper p-7 shadow-card"
-                >
-                  <span className="grid size-11 place-items-center rounded-2xl bg-brand-soft text-brand">
-                    <BookOpen aria-hidden="true" className="size-5" />
-                  </span>
-                  <p className="mt-6 font-mono text-xs font-medium tracking-wide text-muted">{r.code}</p>
-                  <h3 className="mt-1 text-xl font-semibold leading-snug text-ink">{r.title}</h3>
+                <StaggerItem key={r.code + r.title} as="article">
+                  <Link
+                    href={r.href}
+                    className="group flex h-full flex-col justify-between rounded-card border border-border bg-paper p-7 shadow-card transition-[transform,box-shadow] duration-300 ease-out-soft hover:-translate-y-1 hover:shadow-lift"
+                  >
+                    <div>
+                      <span className="grid size-11 place-items-center rounded-2xl bg-brand-soft text-brand transition-colors group-hover:bg-brand group-hover:text-white">
+                        <BookOpen aria-hidden="true" className="size-5" />
+                      </span>
+                      <p className="mt-6 font-mono text-xs font-medium tracking-wide text-muted">{r.code}</p>
+                      <h3 className="mt-1 text-xl font-semibold leading-snug text-ink group-hover:text-brand">{r.title}</h3>
+                    </div>
+                    <span className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                      View course
+                      <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
                 </StaggerItem>
               ))}
             </Stagger>

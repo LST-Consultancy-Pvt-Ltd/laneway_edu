@@ -5,7 +5,9 @@
  */
 import campusMelbourne from "../../public/images/campus-melbourne.jpg";
 import campusSydney from "../../public/images/campus-sydney.jpg";
-import heroMural from "../../public/images/home-2.jpg";
+// Hero: "three men laughing while looking in the laptop inside room" by Priscilla Du Preez
+// (https://unsplash.com/photos/XkKCui44iM0) — free to use under the Unsplash License.
+import heroStudents from "../../public/images/hero-library.jpg";
 import collaborate from "../../public/images/course-leadership-bg.jpg";
 import sneakers from "../../public/images/course-leadership-2.jpg";
 import roadAhead from "../../public/images/hero-home.jpg";
@@ -29,7 +31,7 @@ import tsl from "../../public/images/partners/tsl.png";
 
 export const images = {
   logo,
-  heroMural,
+  heroStudents,
   campusSydney,
   campusMelbourne,
   collaborate,

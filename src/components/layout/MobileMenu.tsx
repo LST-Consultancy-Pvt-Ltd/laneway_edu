@@ -128,7 +128,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                           <ul>
                             {category.courses.map((course) => (
                               <li key={course.code + course.title}>
-                                {course.href ? (
+                                {course.featured ? (
                                   <SmartLink
                                     href={course.href}
                                     onClick={onClose}
@@ -138,10 +138,14 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                                     {course.title}
                                   </SmartLink>
                                 ) : (
-                                  <span className="block py-2 pr-2 text-[0.9375rem] leading-snug text-ink/75">
+                                  <SmartLink
+                                    href={course.href}
+                                    onClick={onClose}
+                                    className="block rounded-lg py-2 pr-2 text-[0.9375rem] leading-snug text-ink/80 hover:text-brand"
+                                  >
                                     <span className="mr-1.5 font-mono text-xs text-muted">{course.code}</span>
                                     {course.title}
-                                  </span>
+                                  </SmartLink>
                                 )}
                               </li>
                             ))}

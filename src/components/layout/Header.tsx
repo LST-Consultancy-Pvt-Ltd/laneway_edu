@@ -265,7 +265,7 @@ export function Header() {
                         >
                           {category.courses.map((course) => (
                             <li key={course.code + course.title}>
-                              {course.href ? (
+                              {course.featured ? (
                                 <Link
                                   href={course.href}
                                   onClick={close}
@@ -277,12 +277,18 @@ export function Header() {
                                   {course.title}
                                 </Link>
                               ) : (
-                                <span className="-mx-2 block px-2 py-1.5 text-sm leading-snug text-ink/75">
+                                <Link
+                                  href={course.href}
+                                  onClick={close}
+                                  className="group -mx-2 block rounded-lg px-2 py-1.5 text-sm leading-snug text-ink/80 transition-colors hover:bg-surface hover:text-ink"
+                                >
                                   <span className="mr-1.5 font-mono text-[0.6875rem] font-medium text-muted">
                                     {course.code}
                                   </span>
-                                  {course.title}
-                                </span>
+                                  <span className="group-hover:underline group-hover:decoration-brand group-hover:underline-offset-4">
+                                    {course.title}
+                                  </span>
+                                </Link>
                               )}
                             </li>
                           ))}

@@ -18,9 +18,14 @@ export type CategoryId =
 export type CourseLink = {
   code: string;
   title: string;
-  /** Only courses rebuilt in this demo have a page */
-  href?: string;
+  /** Every course links to the demo course page (see DEMO_COURSE_HREF) */
+  href: string;
+  /** The course this demo page was built for — highlighted in menus/cards */
+  featured?: boolean;
 };
+
+type CourseEntry = Pick<CourseLink, "code" | "title">;
+type CategoryEntry = Omit<CourseCategory, "courses"> & { courses: CourseEntry[] };
 
 export type CourseCategory = {
   id: CategoryId;
@@ -32,7 +37,14 @@ export type CourseCategory = {
 
 export const LEADERSHIP_SLUG = "diploma-of-leadership-and-management";
 
-export const courseCategories: CourseCategory[] = [
+/**
+ * Demo: only one course page is built, so every course opens it as a sample.
+ * When the remaining pages exist, give each course its own href here.
+ */
+export const DEMO_COURSE_HREF = `/courses/${LEADERSHIP_SLUG}`;
+const FEATURED_CODE = "BSB50420";
+
+const categories: CategoryEntry[] = [
   {
     id: "entrepreneur",
     name: "Entrepreneur",
@@ -57,11 +69,7 @@ export const courseCategories: CourseCategory[] = [
     name: "Leader",
     blurb: "Lead people, teams and strategy with confidence.",
     courses: [
-      {
-        code: "BSB50420",
-        title: "Diploma of Leadership and Management",
-        href: `/courses/${LEADERSHIP_SLUG}`,
-      },
+      { code: "BSB50420", title: "Diploma of Leadership and Management" },
       { code: "BSB60420", title: "Advanced Diploma of Leadership and Management" },
       { code: "BSB80120", title: "Graduate Diploma of Management (Learning)" },
       { code: "BSB80320", title: "Graduate Diploma of Strategic Leadership" },
@@ -109,6 +117,15 @@ export const courseCategories: CourseCategory[] = [
     ],
   },
 ];
+
+export const courseCategories: CourseCategory[] = categories.map((category) => ({
+  ...category,
+  courses: category.courses.map((course) => ({
+    ...course,
+    href: DEMO_COURSE_HREF,
+    featured: course.code === FEATURED_CODE,
+  })),
+}));
 
 export const totalCourses = courseCategories.reduce((n, c) => n + c.courses.length, 0);
 

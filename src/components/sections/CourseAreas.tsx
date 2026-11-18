@@ -71,7 +71,7 @@ export function CourseAreas() {
                 >
                   {category.courses.map((course) => (
                     <li key={course.code + course.title}>
-                      {course.href ? (
+                      {course.featured ? (
                         <Link
                           href={course.href}
                           className="group/link -mx-3 my-1 flex items-center justify-between gap-3 rounded-xl bg-brand-soft px-3 py-2.5 text-[0.9375rem] leading-snug text-brand-dark transition-colors hover:bg-brand hover:text-white"
@@ -88,12 +88,21 @@ export function CourseAreas() {
                           />
                         </Link>
                       ) : (
-                        <p className="py-2.5 text-[0.9375rem] leading-snug text-ink">
-                          <span className="mb-0.5 block font-mono text-[0.6875rem] font-medium tracking-wide text-muted">
-                            {course.code}
+                        <Link
+                          href={course.href}
+                          className="group/link flex items-start justify-between gap-3 rounded-lg py-2.5 text-[0.9375rem] leading-snug text-ink transition-colors hover:text-brand"
+                        >
+                          <span>
+                            <span className="mb-0.5 block font-mono text-[0.6875rem] font-medium tracking-wide text-muted">
+                              {course.code}
+                            </span>
+                            <span className="font-medium">{course.title}</span>
                           </span>
-                          <span className="font-medium">{course.title}</span>
-                        </p>
+                          <ArrowRight
+                            aria-hidden="true"
+                            className="mt-4 size-4 shrink-0 text-muted opacity-0 transition-[opacity,transform] group-hover/link:translate-x-1 group-hover/link:text-brand group-hover/link:opacity-100 group-focus-visible/link:opacity-100"
+                          />
+                        </Link>
                       )}
                     </li>
                   ))}
