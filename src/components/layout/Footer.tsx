@@ -16,7 +16,7 @@ export function Footer() {
     <footer id="contact" className="bg-ink text-white">
       {/* Newsletter band */}
       <div className="border-b border-white/10">
-        <Container className="grid gap-8 py-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16 lg:py-16">
+        <Container className="grid grid-cols-1 gap-8 py-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16 lg:py-16">
           <div>
             <h2 className="text-3xl font-semibold leading-tight sm:text-4xl">
               <WordReveal text={newsletter.title} />

@@ -54,7 +54,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <style dangerouslySetInnerHTML={{ __html: loaderStyles }} />
         <script dangerouslySetInnerHTML={{ __html: loaderScript }} />
       </head>
-      <body className="flex min-h-dvh flex-col">
+      {/* overflow-x-clip: slide-in animations start off-screen; clip (not hidden) keeps sticky working */}
+      <body className="flex min-h-dvh flex-col overflow-x-clip">
         <PageLoader />
         <MotionProvider>
           <SmoothScroll>
