@@ -110,8 +110,6 @@ const categories: CategoryEntry[] = [
       { code: "MSF30322", title: "Certificate III in Cabinet Making and Timber Technology" },
       { code: "CPC30620", title: "Certificate III in Painting and Decorating" },
       { code: "CPC30220", title: "Certificate III in Carpentry" },
-      { code: "CPC31320", title: "Certificate III in Wall and Floor Tiling" },
-      { code: "CPC33020", title: "Certificate III in Bricklaying and Blocklaying" },
       { code: "CPC50220", title: "Diploma of Building and Construction (Building)" },
       { code: "RII60520", title: "Advanced Diploma of Civil Construction Design" },
     ],
